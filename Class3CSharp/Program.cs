@@ -12,6 +12,7 @@ namespace Class3CSharp
         const string BASE_URL = "https://swapi.co/api/";
         static void Main(string[] args)
         {
+            Console.WriteLine("\nSWAPI PLANETS");
             string planetsURL = "planets/?page=";
             var i = 1;
             while (true) {
@@ -22,8 +23,7 @@ namespace Class3CSharp
                 {
                     break;
 
-                }else{
-                    Console.WriteLine("\nSWAPI PLANETS");
+                }else{ 
                     foreach (JObject planet in planets)
                     {
                         Console.WriteLine("Planet Name: " + planet["name"]);
@@ -79,31 +79,3 @@ namespace Class3CSharp
 }
 
 }
-//Console.WriteLine(a);
-
-//   const string PEOPLE = "people/";
-//       Console.WriteLine(CallRestMethod(new Uri(BASE_URL + PLANETS)));
-//       Console.WriteLine(CallRestMethod(new Uri(BASE_URL + PEOPLE)));
-
-
-//           string linkOfFilms = a["films"][0].Value<string>();
-
-
-//JArray films = (JArray)a("films");
-
-
-
-
-
-//    for(var i = 1; i <= 10; i++) {
-//                         JObject a = CallRestMethod(new Uri(BASE_URL + PLANETS + i));
-//string planetNames = a.GetValue("name").Value<string>();
-//JArray films = (JArray)a["films"];
-//Console.WriteLine("Planet Name: " + planetNames);
- //                       foreach (Uri u in films)
- //                        {
- //                           JObject b = CallRestMethod(u);
-//string filmNames = b.GetValue("title").Value<string>();
-//Console.WriteLine(filmNames);
-  //                          }
-   //             Console.WriteLine("\nSWAPI PLANETS");
