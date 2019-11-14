@@ -12,16 +12,46 @@ namespace Class3CSharp
         const string BASE_URL = "https://swapi.co/api/";
         static void Main(string[] args)
         {
-            const string PLANETS = "planets/";
-                    for(var i = 1; i < 10; i++) {
-                         JObject a = CallRestMethod(new Uri(BASE_URL + PLANETS + i));
-                        string planetNames = a.GetValue("name").Value<string>();
-                        Console.WriteLine("Planet Name: " + planetNames);
-                     }
+            string planetsURL = "planets/?page=";
+            var i = 1;
+            while (true) {
+                
+                JObject planetResult = CallRestMethod(BASE_URL + planetsURL + i);
+                    JArray planets = (JArray)planetResult["results"];
+                if(planets == null)
+                {
+                    break;
+
+                }else{
+                    Console.WriteLine("\nSWAPI PLANETS");
+                    foreach (JObject planet in planets)
+                    {
+                        Console.WriteLine("Planet Name: " + planet["name"]);
+                        Console.WriteLine("Films: ");
+                        JArray films = (JArray)planet["films"];
+                        if (films.Count != 0)
+                        {
+                            foreach (JValue film in films)
+                            {
+                                Console.WriteLine(CallRestMethod(film.ToString())["title"]);
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Not in any films");
+                        }
+
+                        Console.WriteLine();
+                    }
+                }
+                i++;
+               
+
+            }
 
             Console.ReadLine();
         }
-        static JObject CallRestMethod(Uri uri)
+        static JObject CallRestMethod(string uri)
         {
             try
             {
@@ -41,11 +71,12 @@ namespace Class3CSharp
             }
             catch (Exception e)
             {
-                string result = $"{{'Error':'An error has occured. Could not get {uri.LocalPath}', 'Message': '{e.Message}'}}";
+                string result = $"{{'Error':'An error has occured. Could not get to the URL', 'Message': '{e.Message}'}}";
                 return JObject.Parse(result);
             }
         }
-    }
+
+}
 
 }
 //Console.WriteLine(a);
@@ -59,3 +90,20 @@ namespace Class3CSharp
 
 
 //JArray films = (JArray)a("films");
+
+
+
+
+
+//    for(var i = 1; i <= 10; i++) {
+//                         JObject a = CallRestMethod(new Uri(BASE_URL + PLANETS + i));
+//string planetNames = a.GetValue("name").Value<string>();
+//JArray films = (JArray)a["films"];
+//Console.WriteLine("Planet Name: " + planetNames);
+ //                       foreach (Uri u in films)
+ //                        {
+ //                           JObject b = CallRestMethod(u);
+//string filmNames = b.GetValue("title").Value<string>();
+//Console.WriteLine(filmNames);
+  //                          }
+   //             Console.WriteLine("\nSWAPI PLANETS");
