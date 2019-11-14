@@ -13,12 +13,14 @@ namespace Class3CSharp
         static void Main(string[] args)
         {
             const string PLANETS = "planets/";
-            const string PEOPLE = "people/";
-            Console.WriteLine(CallRestMethod(new Uri(BASE_URL + PLANETS)));
-            Console.WriteLine(CallRestMethod(new Uri(BASE_URL + PEOPLE)));
+                    for(var i = 1; i < 10; i++) {
+                         JObject a = CallRestMethod(new Uri(BASE_URL + PLANETS + i));
+                        string planetNames = a.GetValue("name").Value<string>();
+                        Console.WriteLine("Planet Name: " + planetNames);
+                     }
+
             Console.ReadLine();
         }
-
         static JObject CallRestMethod(Uri uri)
         {
             try
@@ -31,6 +33,7 @@ namespace Class3CSharp
                 StreamReader responseStream = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
                 // Read the response and write it to the console
                 JObject result = JObject.Parse(responseStream.ReadToEnd());
+                
                 // Close the connection to the api and the stream reader
                 response.Close();
                 responseStream.Close();
@@ -45,3 +48,14 @@ namespace Class3CSharp
     }
 
 }
+//Console.WriteLine(a);
+
+//   const string PEOPLE = "people/";
+//       Console.WriteLine(CallRestMethod(new Uri(BASE_URL + PLANETS)));
+//       Console.WriteLine(CallRestMethod(new Uri(BASE_URL + PEOPLE)));
+
+
+//           string linkOfFilms = a["films"][0].Value<string>();
+
+
+//JArray films = (JArray)a("films");
